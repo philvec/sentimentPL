@@ -1,0 +1,17 @@
+/sentimentpl/data/
+
+# IPython
+.ipynb_checkpoints
+
+# Pycharm
+/.idea/
+
+# Unit test / coverage reports
+__pycache__/
+.tox/
+
+# packages
+/.eggs/
+/dist/
+/build/
+/sentimentpl.egg-info

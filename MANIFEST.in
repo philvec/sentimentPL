@@ -1,0 +1,1 @@
+include sentimentpl/trained_models/*.pth
