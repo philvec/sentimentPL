@@ -1,2 +1,42 @@
 # sentimentPL
-Trained PyTorch models for polish language sentiment prediction based on allegro/herbert and CLARIN-PL datasets
+PyTorch models for polish language sentiment regression based on allegro/herbert and CLARIN-PL dataset
+
+### Installation
+sentimentPL is available on PyPI, so You can just run:
+```
+$ pip3 install sentimentpl
+```
+
+### Basic Usage
+For a given sentence, the model produces output value from (-1;1) range (from most negative to most positive).
+```python
+from sentimentpl.models import SentimentPLModel
+
+model = SentimentPLModel(from_pretrained='latest')
+print(model('Jestem wesoły Romek').item())
+```
+
+**Note:** *The model uses transformers API to load pretrained embedding models from their repository. 
+They should be downloaded and cached on Your machine.*
+
+**Note:** *The model loads pretrained state dicts for final regression layers from a file included in the package files 
+(as its size does not exceed 1MB). This will be changed in the future, so the model would be loaded from 
+external repository.*
+
+### Training
+For training You would probably want to download the source code by cloning the repository:
+```
+$ git clone https://github.com/philvec/sentimentPL.git
+```
+Download training data from <br>
+https://clarin-pl.eu/dspace/bitstream/handle/11321/710/dataset_conll.zip <br>
+and unzip it to *sentimentpl/data*. <br><br>
+In the main repository dir, run
+```
+$ python3 ./sentimentpl/train.py
+```
+
+### Version history
+
+#### v.0.0.1 latest
+Basic 3-layer MLP with ReLU and input Dropout.

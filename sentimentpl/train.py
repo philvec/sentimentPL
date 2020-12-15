@@ -3,12 +3,12 @@ from torch import nn
 from tqdm.auto import tqdm, trange
 import matplotlib.pyplot as plt
 
-from model import SentimentPLModel
-from datautils import SentimentPLDataset
+from sentimentpl.models import SentimentPLModel
+from sentimentpl.datautils import SentimentPLDataset
 
 
 if __name__ == '__main__':
-    batch_size = 64
+    batch_size = 16
     train_files = [#'sentiment_data/all.text.train.txt',
                    'data/all.sentence.train.txt']
     test_files = [#'sentiment_data/all.text.test.txt',
@@ -20,18 +20,21 @@ if __name__ == '__main__':
     model = SentimentPLModel().cuda()
     criterion = nn.MSELoss()
     optimizer = torch.optim.AdamW(model.parameters())
+    n_epochs = 30
 
     train_losses = []
     valid_losses = []
 
-    pbar = trange(40)
+    best_val_loss = float('inf')
 
-    for epoch in pbar:
+    for epoch in range(n_epochs):
+        print('---------------------------------------------------------')
+        print(f'epoch {epoch+1}/{n_epochs}\n')
         # training
         total_loss = 0
         model.train()
-        for i, (x, y) in enumerate(train_loader, 0):
-            x, y = x.cuda(), y.cuda()
+        for i, (x, y) in tqdm(enumerate(train_loader), total=len(train_loader)):
+            y = y.cuda()
             optimizer.zero_grad()
             pred = model(x)
             loss = criterion(pred, y)
@@ -44,14 +47,20 @@ if __name__ == '__main__':
         total_loss = 0
         model.eval()
         for i, (x, y) in enumerate(test_loader):
-            x, y = x.cuda(), y.cuda()
+            y = y.cuda()
             with torch.no_grad():
                 pred = model(x)
                 loss = criterion(pred, y)
             total_loss += loss.item()
         valid_losses.append(total_loss / (i + 1))
 
-        pbar.set_description(f'loss : {train_losses[-1]:.6f}, val_loss: {valid_losses[-1]:.6f}')
+        print(f'\tloss : {train_losses[-1]:.6f}, val_loss: {valid_losses[-1]:.6f}\n')
+
+        # model saving
+        if valid_losses[-1] <= best_val_loss:
+            best_val_loss = valid_losses[-1]
+            model.save()
+            print('model saved!\n')
 
     print('Finished Training')
 
@@ -59,6 +68,3 @@ if __name__ == '__main__':
     plt.plot(valid_losses)
     plt.legend(['train loss', 'valid loss'])
     plt.show()
-
-    model.cpu()
-    torch.save(model, 'trained_models/sentimentPL_allegro-hubert_clarin-PL.pth')
