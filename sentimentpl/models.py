@@ -30,7 +30,7 @@ class SentimentPLModel(nn.Module):
             self.fc.load_state_dict(torch.load(f))
             self.eval()
 
-    def save(self, name='latest'):
+    def save(self, name='latest.pth'):
         self.fc.to('cpu')
         torch.save(self.fc.state_dict(), f'./trained_models/{name}.pth')
         self.fc.to(next(self.embed_model.parameters()).device)

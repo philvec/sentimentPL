@@ -12,7 +12,7 @@ For a given sentence, the model produces output value from (-1;1) range (from mo
 ```python
 from sentimentpl.models import SentimentPLModel
 
-model = SentimentPLModel(from_pretrained='latest')
+model = SentimentPLModel(from_pretrained='latest.pth')
 print(model('Jestem wesoły Romek').item())
 ```
 
@@ -38,5 +38,5 @@ $ python3 ./sentimentpl/train.py
 
 ### Version history
 
-#### v.0.0.2 latest
+#### v.0.0.3 latest
 Basic 3-layer MLP with ReLU and input Dropout.
