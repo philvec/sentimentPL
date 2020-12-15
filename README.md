@@ -1,8 +1,10 @@
 # sentimentPL
 PyTorch models for polish language sentiment regression based on allegro/herbert and CLARIN-PL dataset
 
-![PyPI - License](https://img.shields.io/pypi/l/sentimentpl)
-![PyPI](https://img.shields.io/pypi/v/sentimentpl)
+[![PyPI - License](https://img.shields.io/pypi/l/sentimentpl)](https://www.gnu.org/licenses/gpl-3.0)
+[![PyPI](https://img.shields.io/pypi/v/sentimentpl)](https://pypi.org/project/sentimentpl/)
+[![GitHub Repo stars](https://img.shields.io/github/stars/philvec/sentimentpl)](https://github.com/philvec/sentimentPL)
+[![GitHub last commit](https://img.shields.io/github/last-commit/philvec/sentimentpl)](https://github.com/philvec/sentimentPL)
 
 ### Installation
 sentimentPL is available on PyPI, so You can just run:
