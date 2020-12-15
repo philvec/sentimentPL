@@ -38,5 +38,5 @@ $ python3 ./sentimentpl/train.py
 
 ### Version history
 
-#### v.0.0.1 latest
+#### v.0.0.2 latest
 Basic 3-layer MLP with ReLU and input Dropout.
