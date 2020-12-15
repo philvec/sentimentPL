@@ -12,7 +12,7 @@ For a given sentence, the model produces output value from (-1;1) range (from mo
 ```python
 from sentimentpl.models import SentimentPLModel
 
-model = SentimentPLModel(from_pretrained='latest.pth')
+model = SentimentPLModel(from_pretrained='latest')
 print(model('Jestem wesoły Romek').item())
 ```
 

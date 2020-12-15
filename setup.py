@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="sentimentpl",
-    version="0.0.3",
+    version="0.0.5",
     author="Filip Strzałka",
     author_email="strzalkafilip@gmail.com",
     description="PyTorch models for polish language sentiment regression based on allegro/herbert and CLARIN-PL dataset",
@@ -20,5 +20,5 @@ setuptools.setup(
         "Operating System :: OS Independent",
     ],
     python_requires='>=3.7',
-    install_requires=['torch', 'transformers', 'tqdm', 'matplotlib']
+    install_requires=['torch>=1.7.1', 'transformers', 'tqdm', 'matplotlib']
 )
