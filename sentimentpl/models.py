@@ -1,8 +1,17 @@
 from contextlib import ExitStack
+import importlib
 import torch
 from torch import nn
 from transformers import XLMTokenizer, RobertaModel
 
+import io
+try:
+    import importlib.resources as pkg_resources
+except ImportError:
+    # Try backported to PY<37 `importlib_resources`.
+    import importlib_resources as pkg_resources
+
+from sentimentpl import trained_models
 
 class SentimentPLModel(nn.Module):
     def __init__(self, from_pretrained=None):
@@ -17,12 +26,13 @@ class SentimentPLModel(nn.Module):
                                 nn.Linear(16, 1), nn.Tanh())
 
         if from_pretrained is not None:
-            self.fc.load_state_dict(torch.load(f'trained_models/{from_pretrained}.pth'))
+            f = io.BytesIO(importlib.resources.read_binary(trained_models, f'{from_pretrained}.pth'))
+            self.fc.load_state_dict(torch.load(f))
             self.eval()
 
     def save(self, name='latest'):
         self.fc.to('cpu')
-        torch.save(self.fc.state_dict(), f'trained_models/{name}.pth')
+        torch.save(self.fc.state_dict(), f'./trained_models/{name}.pth')
         self.fc.to(next(self.embed_model.parameters()).device)
 
     def forward(self, x, tune_embedding=False):
