@@ -1,5 +1,5 @@
 # sentimentPL
-PyTorch models for polish language sentiment regression based on allegro/herbert and CLARIN-PL dataset
+PyTorch models for Polish language sentiment regression based on allegro/herbert and CLARIN-PL dataset
 
 [![PyPI - License](https://img.shields.io/pypi/l/sentimentpl)](https://www.gnu.org/licenses/gpl-3.0)
 [![PyPI](https://img.shields.io/pypi/v/sentimentpl)](https://pypi.org/project/sentimentpl/)
