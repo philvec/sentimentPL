@@ -8,7 +8,7 @@ from sentimentpl.datautils import SentimentPLDataset
 
 
 if __name__ == '__main__':
-    batch_size = 16
+    batch_size = 32
     train_files = [#'sentiment_data/all.text.train.txt',
                    'data/all.sentence.train.txt']
     test_files = [#'sentiment_data/all.text.test.txt',
@@ -17,10 +17,11 @@ if __name__ == '__main__':
     train_loader = torch.utils.data.DataLoader(SentimentPLDataset(train_files), batch_size, shuffle=True)
     test_loader = torch.utils.data.DataLoader(SentimentPLDataset(test_files), batch_size)
 
-    model = SentimentPLModel().cuda()
+    model = SentimentPLModel().cuda()#tokenizer='trained_models/politicalBERT', embed_model='trained_models/politicalBERT').cuda()
     criterion = nn.MSELoss()
     optimizer = torch.optim.AdamW(model.parameters())
     n_epochs = 30
+    train_embedding = [False]#*4 + [True]
 
     train_losses = []
     valid_losses = []
@@ -29,14 +30,15 @@ if __name__ == '__main__':
 
     for epoch in range(n_epochs):
         print('---------------------------------------------------------')
-        print(f'epoch {epoch+1}/{n_epochs}\n')
+        tune_embedding = train_embedding[min(epoch, len(train_embedding)-1)]
+        print(f'epoch {epoch+1}/{n_epochs}\n  Tune embedding: {tune_embedding}')
         # training
         total_loss = 0
         model.train()
         for i, (x, y) in tqdm(enumerate(train_loader), total=len(train_loader)):
             y = y.cuda()
             optimizer.zero_grad()
-            pred = model(x)
+            pred = model(x, tune_embedding=tune_embedding)
             loss = criterion(pred, y)
             loss.backward()
             optimizer.step()
