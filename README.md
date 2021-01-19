@@ -43,7 +43,10 @@ $ python3 ./sentimentpl/train.py
 
 ### Version history
 
-#### v.0.0.5 latest
+#### v.0.0.6 latest
+model better trained to MSE ~0.307, added HerBERT finetuning option
+
+#### v.0.0.5
 Basic 3-layer MLP with ReLU and input Dropout.
 
 ### References:
