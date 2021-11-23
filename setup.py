@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="sentimentpl",
-    version="0.0.6",
+    version="0.0.7",
     author="Filip Strzałka",
     author_email="strzalkafilip@gmail.com",
     description="PyTorch models for polish language sentiment regression based on allegro/herbert and CLARIN-PL dataset",

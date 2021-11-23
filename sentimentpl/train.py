@@ -9,19 +9,20 @@ from sentimentpl.datautils import SentimentPLDataset
 
 if __name__ == '__main__':
     batch_size = 32
-    train_files = [#'sentiment_data/all.text.train.txt',
+    train_files = [  # 'sentiment_data/all.text.train.txt',
                    'data/all.sentence.train.txt']
-    test_files = [#'sentiment_data/all.text.test.txt',
+    test_files = [  # 'sentiment_data/all.text.test.txt',
                   'data/all.sentence.test.txt']
 
     train_loader = torch.utils.data.DataLoader(SentimentPLDataset(train_files), batch_size, shuffle=True)
     test_loader = torch.utils.data.DataLoader(SentimentPLDataset(test_files), batch_size)
 
-    model = SentimentPLModel().cuda()#tokenizer='trained_models/politicalBERT', embed_model='trained_models/politicalBERT').cuda()
+    model = SentimentPLModel().cuda()
+    # tokenizer='trained_models/politicalBERT', embed_model='trained_models/politicalBERT').cuda()
     criterion = nn.MSELoss()
     optimizer = torch.optim.AdamW(model.parameters())
     n_epochs = 30
-    train_embedding = [False]#*4 + [True]
+    train_embedding = [False]  # *4 + [True]
 
     train_losses = []
     valid_losses = []
