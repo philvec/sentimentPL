@@ -43,6 +43,9 @@ $ python3 ./sentimentpl/train.py
 
 ### Version history
 
+#### v.0.0.7 latest
+fix bugs with incorrect scoring of longer texts: ReLU replaced with LeakyReLU, re-trained to MSE ~0.303
+
 #### v.0.0.6 latest
 model better trained to MSE ~0.307, added HerBERT finetuning option
 

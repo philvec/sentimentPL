@@ -5,6 +5,7 @@ from torch import nn
 from transformers import XLMTokenizer, RobertaModel
 
 import io
+
 try:
     import importlib.resources as pkg_resources
 except ImportError:
@@ -12,6 +13,7 @@ except ImportError:
     import importlib_resources as pkg_resources
 
 from sentimentpl import trained_models
+
 
 class SentimentPLModel(nn.Module):
     def __init__(self,
@@ -24,8 +26,8 @@ class SentimentPLModel(nn.Module):
         self.embed_model = RobertaModel.from_pretrained(embed_model, return_dict=True)
 
         self.fc = nn.Sequential(nn.Dropout(0.5),
-                                nn.Linear(768, 256), nn.ReLU(),
-                                nn.Linear(256, 16), nn.ReLU(),
+                                nn.Linear(768, 256), nn.LeakyReLU(),
+                                nn.Linear(256, 16), nn.LeakyReLU(),
                                 nn.Linear(16, 1), nn.Tanh())
 
         if from_pretrained is not None:
@@ -47,4 +49,8 @@ class SentimentPLModel(nn.Module):
                 stack.enter_context(torch.no_grad())
             embeddings = self.embed_model(**encoded)['pooler_output'].float()
 
-        return self.fc(embeddings)
+        output = embeddings
+        for fc_i in self.fc:
+            output = fc_i(output)
+            # print(output)
+        return output

@@ -2,9 +2,8 @@ from transformers import XLMTokenizer, RobertaModel
 from tqdm.auto import tqdm, trange
 import torch
 
-
-
 mapping = {'plus': 1., 'minus': -1., 'zero': 0., 'amb': 0.}
+
 
 def load_embed(filenames):
     lines = []
